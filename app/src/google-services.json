@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "720338188984",
+    "project_id": "udemyreader-fa176",
+    "storage_bucket": "udemyreader-fa176.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720338188984:android:9963f3f8bf314db8de524d",
+        "android_client_info": {
+          "package_name": "com.jig.UdemyReader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720338188984-epfj80m770edemi3caacp9bc16mbe059.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ4DJGe4kkWCTK8_pz5ivydd5NmyYVeuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720338188984-epfj80m770edemi3caacp9bc16mbe059.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
