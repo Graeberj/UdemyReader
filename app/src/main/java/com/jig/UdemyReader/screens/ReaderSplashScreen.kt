@@ -21,11 +21,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.jig.UdemyReader.components.ReaderLogo
+import com.jig.UdemyReader.navigation.ReaderScreens
 import kotlinx.coroutines.delay
 
-@Preview
+
 @Composable
-fun ReaderSplashScreen(navController: NavController = NavController(context = LocalContext.current)){
+fun ReaderSplashScreen(navController: NavController){
 
     val scale = remember {
         Animatable(0f)
@@ -40,7 +42,7 @@ fun ReaderSplashScreen(navController: NavController = NavController(context = Lo
                         .getInterpolation(it)
                 }))
         delay(2000L)
-
+        navController.navigate(ReaderScreens.LoginScreen.name)
     }
 
     Surface(modifier = Modifier
@@ -57,11 +59,11 @@ fun ReaderSplashScreen(navController: NavController = NavController(context = Lo
             verticalArrangement = Arrangement.Center
 
         ) {
-            Text(text = "Yosh Reader", style = MaterialTheme.typography.h3,
-            color = Color.Red.copy(alpha = 0.5f))
+            ReaderLogo()
             Spacer(Modifier.height(15.dp))
             Text(text = "\"Just keep reading\"",
             style = MaterialTheme.typography.h5, color = Color.LightGray)
         }
     }
 }
+

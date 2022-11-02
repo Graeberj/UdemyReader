@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Yosh Reader</string>
+    <string name="create_acct">Please enter a valid email and password</string>
+    <string name="sign_in">Sign in here!</string>
 </resources>
