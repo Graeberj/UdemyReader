@@ -1,6 +1,5 @@
 package com.jig.UdemyReader.screens.login
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -28,9 +27,13 @@ import com.jig.UdemyReader.R
 import com.jig.UdemyReader.components.EmailInput
 import com.jig.UdemyReader.components.PasswordInput
 import com.jig.UdemyReader.components.ReaderLogo
+import com.jig.UdemyReader.navigation.ReaderScreens
 
 @Composable
-fun Login(navController: NavController) {
+fun Login(
+    navController: NavController,
+    viewModel: LoginScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+) {
     val showLoginForm = rememberSaveable {
         mutableStateOf(true)
     }
@@ -44,11 +47,15 @@ fun Login(navController: NavController) {
         ) {
             ReaderLogo()
             if (showLoginForm.value) UserForm(isLoading = false, isCreateAccount = false)
-            { email, password -> //todo add login
+            { email, password -> viewModel.signInWithEmailAndPassword(email, password){
+                navController.navigate(ReaderScreens.ReaderHomeScreen.name)
+            }
             }
             else {
                 UserForm(isLoading = false, isCreateAccount = true){ email, password ->
-                    //todo create account
+                    viewModel.createUserWithEmailAndPassword(email, password){
+                        navController.navigate(ReaderScreens.ReaderHomeScreen.name)
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(15.dp))

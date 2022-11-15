@@ -17,10 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
 import com.jig.UdemyReader.components.ReaderLogo
 import com.jig.UdemyReader.navigation.ReaderScreens
 import kotlinx.coroutines.delay
@@ -42,7 +41,11 @@ fun ReaderSplashScreen(navController: NavController){
                         .getInterpolation(it)
                 }))
         delay(2000L)
-        navController.navigate(ReaderScreens.LoginScreen.name)
+        if(FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()){
+            navController.navigate(ReaderScreens.LoginScreen.name)
+        } else {
+            navController.navigate(ReaderScreens.ReaderHomeScreen.name)
+        }
     }
 
     Surface(modifier = Modifier
@@ -66,4 +69,3 @@ fun ReaderSplashScreen(navController: NavController){
         }
     }
 }
-

@@ -1,8 +1,5 @@
 package com.jig.UdemyReader.navigation
 
-import com.jig.UdemyReader.screens.login.Login
-import com.jig.UdemyReader.screens.search.Search
-
 enum class ReaderScreens {
     SplashScreen,
     LoginScreen,
