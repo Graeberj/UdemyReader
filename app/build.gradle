@@ -66,21 +66,20 @@ dependencies {
 
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:31.0.0')
-    //firebase auth and firestore
+
+    //Firebase Auth and Firestore
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+
     //Dagger - Hilt
     implementation 'com.google.dagger:hilt-android:2.39'
-
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
-// Dagger - Hilt
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
-    kapt "androidx.hilt:hilt-compiler:1.0.0"
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     //material icons - use with caution!
     implementation "androidx.compose.material:material-icons-extended:$compose_ui_version"
+
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'

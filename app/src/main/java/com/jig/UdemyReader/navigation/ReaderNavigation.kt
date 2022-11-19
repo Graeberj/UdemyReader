@@ -1,6 +1,7 @@
 package com.jig.UdemyReader.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -9,6 +10,7 @@ import com.jig.UdemyReader.screens.details.BookDetailsScreen
 import com.jig.UdemyReader.screens.home.Home
 import com.jig.UdemyReader.screens.login.Login
 import com.jig.UdemyReader.screens.search.Search
+import com.jig.UdemyReader.screens.search.SearchViewModel
 import com.jig.UdemyReader.screens.stats.Stats
 import com.jig.UdemyReader.screens.update.UpdateScreen
 
@@ -29,7 +31,8 @@ fun ReaderNavigation() {
             Login(navController = navController)
         }
         composable(ReaderScreens.SearchScreen.name){
-            Search(navController = navController)
+            val viewModel = hiltViewModel<SearchViewModel>()
+            Search(navController = navController, viewModel)
         }
         composable(ReaderScreens.ReaderStatsScreen.name){
             Stats(navController = navController)
