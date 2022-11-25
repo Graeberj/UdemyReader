@@ -1,10 +1,8 @@
 package com.jig.UdemyReader.repository
 
-import com.jig.UdemyReader.data.DataOrException
 import com.jig.UdemyReader.data.Resource
 import com.jig.UdemyReader.model.Item
 import com.jig.UdemyReader.network.BooksApi
-import retrofit2.http.Query
 import javax.inject.Inject
 
 class BookRepository @Inject constructor(private val api: BooksApi) {
