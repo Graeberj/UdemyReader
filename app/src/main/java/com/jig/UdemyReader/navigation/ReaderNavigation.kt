@@ -2,9 +2,11 @@ package com.jig.UdemyReader.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.jig.UdemyReader.screens.ReaderSplashScreen
 import com.jig.UdemyReader.screens.details.BookDetailsScreen
 import com.jig.UdemyReader.screens.home.Home
@@ -24,8 +26,13 @@ fun ReaderNavigation() {
         composable(ReaderScreens.ReaderHomeScreen.name){
             Home(navController = navController)
         }
-        composable(ReaderScreens.DetailScreen.name){
-            BookDetailsScreen(navController = navController)
+        val detailName = ReaderScreens.DetailScreen.name
+        composable("$detailName/{bookId}", arguments = listOf(navArgument("bookId"){
+            type = NavType.StringType
+        })){ backStackEntry ->
+            backStackEntry.arguments?.getString("bookId").let {
+                BookDetailsScreen(navController = navController, bookId = it.toString())
+            }
         }
         composable(ReaderScreens.LoginScreen.name){
             Login(navController = navController)

@@ -1,7 +1,5 @@
 package com.jig.UdemyReader.screens.search
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -19,10 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -30,7 +27,6 @@ import coil.compose.rememberImagePainter
 import com.jig.UdemyReader.components.InputField
 import com.jig.UdemyReader.components.ReaderAppBar
 import com.jig.UdemyReader.model.Item
-import com.jig.UdemyReader.model.MBook
 import com.jig.UdemyReader.navigation.ReaderScreens
 
 
@@ -51,8 +47,8 @@ fun Search(navController: NavController, viewModel: SearchViewModel = hiltViewMo
             Column {
                 SearchForm(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
+                            .fillMaxWidth()
+                            .padding(16.dp),
                     viewModel
                 ){ query ->
                     viewModel.searchBooks(query)
@@ -71,11 +67,17 @@ fun SearchedBookList(navController: NavController,
 
 
     val listOfBooks = viewModel.listOfBooks
-
-    LazyColumn(modifier = Modifier.fillMaxSize(),
-    contentPadding = PaddingValues(16.dp)){
-        items(listOfBooks){ book ->
-            BookRow(book, navController)
+    if (viewModel.isLoading){
+        Row {
+            LinearProgressIndicator()
+            Text(text = "Loading")
+        }
+    } else {
+        LazyColumn(modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(16.dp)){
+            items(listOfBooks){ book ->
+                BookRow(book, navController)
+            }
         }
     }
 }
@@ -86,10 +88,12 @@ fun SearchedBookList(navController: NavController,
 fun BookRow(book: Item, navController: NavController) {
     Card(
         modifier = Modifier
-            .clickable { }
-            .fillMaxWidth()
-            .height(100.dp)
-            .padding(3.dp),
+                .clickable {
+                    navController.navigate(ReaderScreens.DetailScreen.name + "/${book.id}")
+                }
+                .fillMaxWidth()
+                .height(100.dp)
+                .padding(3.dp),
         shape = RectangleShape,
         elevation = 7.dp
     ) {
@@ -101,14 +105,27 @@ fun BookRow(book: Item, navController: NavController) {
             Image(painter = rememberImagePainter(data = imageUrl ),
                 contentDescription = "book image",
                 modifier = Modifier
-                    .width(80.dp)
-                    .fillMaxHeight()
-                    .padding(end = 4.dp)
+                        .width(80.dp)
+                        .fillMaxHeight()
+                        .padding(end = 4.dp)
             )
             Column() {
                 Text(text = book.volumeInfo.title, overflow = TextOverflow.Ellipsis)
-                Text(text = "Authors: ${ book.volumeInfo.authors }", overflow = TextOverflow.Clip, style = MaterialTheme.typography.caption)
-                //todo: more fields later
+                Text(text = "Authors: ${ book.volumeInfo.authors }",
+                        overflow = TextOverflow.Clip,
+                        style = MaterialTheme.typography.caption,
+                        fontStyle = FontStyle.Italic
+                        )
+                Text(text = "Date Published: ${ book.volumeInfo.publishedDate }",
+                        overflow = TextOverflow.Clip,
+                        style = MaterialTheme.typography.caption,
+                        fontStyle = FontStyle.Italic
+                )
+                Text(text = "Category: ${ book.volumeInfo.categories }",
+                        overflow = TextOverflow.Clip,
+                        style = MaterialTheme.typography.caption,
+                        fontStyle = FontStyle.Italic
+                )
             }
         }
         

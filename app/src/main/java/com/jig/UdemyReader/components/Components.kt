@@ -330,7 +330,7 @@ fun RoundedButton(
             modifier = Modifier
                 .width(90.dp)
                 .heightIn(40.dp)
-                .clickable { onPress },
+                .clickable { onPress.invoke() },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
