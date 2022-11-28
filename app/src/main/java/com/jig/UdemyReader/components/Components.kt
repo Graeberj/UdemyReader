@@ -237,9 +237,8 @@ fun BookRating(score: Double = 4.5) {
     }
 }
 
-@Preview
 @Composable
-fun BookCard(book: MBook = MBook("23", "title", "authors", "notes"),
+fun BookCard(book: MBook,
              onPressDetails: (String) -> Unit = {}
 ) {
     val context = LocalContext.current
@@ -266,8 +265,7 @@ fun BookCard(book: MBook = MBook("23", "title", "authors", "notes"),
             Row(horizontalArrangement = Arrangement.Center) {
                 Image(
                     painter = rememberImagePainter(
-                        data =
-                        "https://books.google.com/books?id=zyTCAlFPjgYC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                        data = book.photoUrl.toString()
                     ),
                     contentDescription = "book image",
                     modifier = Modifier

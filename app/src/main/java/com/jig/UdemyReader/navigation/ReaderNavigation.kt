@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.jig.UdemyReader.screens.ReaderSplashScreen
 import com.jig.UdemyReader.screens.details.BookDetailsScreen
 import com.jig.UdemyReader.screens.home.Home
+import com.jig.UdemyReader.screens.home.HomeViewModel
 import com.jig.UdemyReader.screens.login.Login
 import com.jig.UdemyReader.screens.search.Search
 import com.jig.UdemyReader.screens.search.SearchViewModel
@@ -24,7 +25,8 @@ fun ReaderNavigation() {
             ReaderSplashScreen(navController = navController)
         }
         composable(ReaderScreens.ReaderHomeScreen.name){
-            Home(navController = navController)
+            val homeViewModel = hiltViewModel<HomeViewModel>()
+            Home(navController = navController, viewModel = homeViewModel)
         }
         val detailName = ReaderScreens.DetailScreen.name
         composable("$detailName/{bookId}", arguments = listOf(navArgument("bookId"){
@@ -44,8 +46,16 @@ fun ReaderNavigation() {
         composable(ReaderScreens.ReaderStatsScreen.name){
             Stats(navController = navController)
         }
-        composable(ReaderScreens.UpdateScreen.name){
-            UpdateScreen(navController = navController)
+        val updateName = ReaderScreens.UpdateScreen.name
+        composable("$updateName/{bookItemId}",
+            arguments = listOf(navArgument("bookItemId") {
+                type = NavType.StringType
+            })
+        ){ navBackStackEntry ->
+            navBackStackEntry.arguments?.getString("bookitemid").let {
+                UpdateScreen(navController = navController, bookItemId = it.toString())
+            }
+
         }
 
     }

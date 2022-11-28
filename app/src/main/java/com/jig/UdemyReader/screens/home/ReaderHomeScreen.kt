@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.jig.UdemyReader.components.BookCard
@@ -26,7 +27,10 @@ import com.jig.UdemyReader.navigation.ReaderScreens
 
 
 @Composable
-fun Home(navController: NavController = NavController(LocalContext.current)) {
+fun Home(
+    navController: NavController = NavController(LocalContext.current),
+    viewModel: HomeViewModel = hiltViewModel()
+) {
     Scaffold(topBar = {
         ReaderAppBar(title = "Yosh Reader", navController = navController)
     },
@@ -38,7 +42,7 @@ fun Home(navController: NavController = NavController(LocalContext.current)) {
         it
         //content
         Surface(modifier = Modifier.fillMaxSize()) {
-            HomeContent(navController)
+            HomeContent(navController, viewModel)
         }
 
     }
@@ -46,15 +50,25 @@ fun Home(navController: NavController = NavController(LocalContext.current)) {
 
 
 @Composable
-fun HomeContent(navController: NavController) {
-    val listOfBooks = listOf(
-        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
-        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
-        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
-        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
-        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
-        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
-    )
+fun HomeContent(navController: NavController, viewModel: HomeViewModel) {
+//    val listOfBooks = listOf(
+//        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
+//        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
+//        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
+//        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
+//        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
+//        MBook(id = "23", title = "title", authors = "authors", notes = "notes"),
+//    )
+    var listOfBooks = emptyList<MBook>()
+    val currentUser = FirebaseAuth.getInstance().currentUser
+
+    if (!viewModel.data.value.data.isNullOrEmpty()){
+        listOfBooks = viewModel.data.value.data!!.toList().filter { mBook ->
+        mBook.userId == currentUser?.uid.toString()
+
+        }
+
+    }
 
     val email = FirebaseAuth.getInstance().currentUser?.email
     val currentUserName = if (!email.isNullOrEmpty()) {
@@ -95,7 +109,7 @@ fun HomeContent(navController: NavController) {
                 Divider()
             }
         }
-        CurrentlyReadingArea(books = listOf(), navController = navController)
+        CurrentlyReadingArea(listOfBooks = listOf(), navController = navController)
         TitleSection(label = "reading list")
         BookListArea(listOfBooks = listOfBooks, navController = navController)
     }
@@ -104,7 +118,7 @@ fun HomeContent(navController: NavController) {
 @Composable
 fun BookListArea(listOfBooks: List<MBook>, navController: NavController) {
     HorizontalScrollableComponent(listOfBooks) {
-        //Todo: oncardclicked navigate
+        navController.navigate(ReaderScreens.UpdateScreen.name + "/$it")
     }
 }
 
@@ -130,9 +144,8 @@ fun HorizontalScrollableComponent(listOfBooks: List<MBook>, onCardPressed: (Stri
 
 @Composable
 fun CurrentlyReadingArea(
-    books: List<MBook>,
+    listOfBooks: List<MBook>,
     navController: NavController
 ) {
-    BookCard()
 }
 
