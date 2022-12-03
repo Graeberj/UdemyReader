@@ -52,7 +52,7 @@ fun ReaderNavigation() {
                 type = NavType.StringType
             })
         ){ navBackStackEntry ->
-            navBackStackEntry.arguments?.getString("bookitemid").let {
+            navBackStackEntry.arguments?.getString("bookItemId").let {
                 UpdateScreen(navController = navController, bookItemId = it.toString())
             }
 

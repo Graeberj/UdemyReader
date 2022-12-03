@@ -1,6 +1,6 @@
 package com.jig.UdemyReader.screens.login
 
-data class LoadingState(val status: Status, val Mesage: String? = null) {
+data class LoadingState(val status: Status, val Message: String? = null) {
 
     companion object {
         val SUCCESS = LoadingState(Status.SUCCESS)

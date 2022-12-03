@@ -27,7 +27,6 @@ class LoginScreenViewModel: ViewModel() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Log.d("FB", "signInWithEmailAndPassword: yaaay! ${task.result.toString()}")
-                        //TODO("take them home")
                         home()
                     } else {
                         Log.d("FB", "signInWithEmailAndPassword: ${task.result.toString()}")
@@ -61,12 +60,13 @@ class LoginScreenViewModel: ViewModel() {
 
     private fun createUser(displayName: String?) {
         val userId = auth.currentUser?.uid
-        val user = MUser(id = null,
-            userId = userId.toString(),
-            displayName = displayName.toString(),
-            avatarUrl = "", quote = "life awesoem",
-            profession = "Android Dev").toMap()
 
+        val user = MUser(userId = userId.toString(),
+            displayName = displayName.toString(),
+            avatarUrl = "",
+            quote = "Life is great",
+            profession = "Android Developer",
+            id = null).toMap()
 
         FirebaseFirestore.getInstance().collection("users")
             .add(user)
